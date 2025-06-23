@@ -9,8 +9,7 @@ import { webSockets } from "@libp2p/websockets";
 import { createLibp2p } from "libp2p";
 import { fromString as uint8ArrayFromString } from "uint8arrays/from-string";
 
-const privateKey =
-  "1uIJIFyOztdjxTBQauQVYRmf6P89xqSnWNWd+FLfaNfrDeyu4DwfhsgYrLyqj1fHnsPVsrjeuQ7OW+G2bRpu9g";
+import config from "../config.json" with { type: 'json' };
 
 async function createNode(options) {
   return await createLibp2p({
@@ -31,10 +30,8 @@ async function createNode(options) {
 
 async function startServer() {
   const node1 = await createNode({
-    privateKey: privateKeyFromRaw(uint8ArrayFromString(privateKey, "base64")),
-    addresses: {
-      listen: ["/ip4/0.0.0.0/tcp/4111", "/ip4/0.0.0.0/tcp/2111/ws"]
-    },
+    privateKey: privateKeyFromRaw(uint8ArrayFromString(config.PRIVATE_KEY, "base64")),
+    ...config.LIBP2P_OPTIONS,
     transports: [tcp(), webSockets()]
   });
   await node1.start();

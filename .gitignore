@@ -2,7 +2,7 @@
 node_modules
 /dist
 /files/**
-/config/config.json
+config.json
 /config/config.*.json
 !/config/config.template.json
 /config/agents.json
