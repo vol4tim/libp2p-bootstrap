@@ -2,7 +2,8 @@ import { noise } from "@chainsafe/libp2p-noise";
 import { yamux } from "@chainsafe/libp2p-yamux";
 import { privateKeyFromRaw } from "@libp2p/crypto/keys";
 import { identify } from "@libp2p/identify";
-import { kadDHT, removePublicAddressesMapper } from "@libp2p/kad-dht";
+import { kadDHT } from "@libp2p/kad-dht";
+// import { kadDHT, removePublicAddressesMapper } from "@libp2p/kad-dht";
 import { ping } from "@libp2p/ping";
 import { tcp } from "@libp2p/tcp";
 import { webSockets } from "@libp2p/websockets";
@@ -22,7 +23,10 @@ async function createNode(options) {
       dht: kadDHT({
         clientMode: false,
         protocol: "/ipfs/lan/kad/1.0.0",
-        peerInfoMapper: removePublicAddressesMapper
+        peerInfoMapper: (peer) => {
+          return peer;
+        }
+        // peerInfoMapper: removePublicAddressesMapper
       })
     }
   });
