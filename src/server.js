@@ -62,9 +62,9 @@ async function startServer() {
 
   // Отправляем сообщение каждые 5 секунд
   setInterval(() => {
-    const msg = {
+    const msg = JSON.stringify({
       time: new Date().toISOString()
-    };
+    });
     node.services.pubsub.publish(
       "topic-pubsub",
       new TextEncoder().encode(msg)
